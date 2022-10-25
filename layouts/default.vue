@@ -45,6 +45,32 @@ export default {};
   opacity: 0;
 }
 
+form {
+  display: flex;
+  flex-direction: column;
+  input,
+  select,
+  textarea {
+    width: 100%;
+    background-color: var(--bg);
+    border-radius: 12px;
+    height: 52px;
+    padding-left: 12px;
+    padding-right: 12px;
+    font-size: 16px;
+  }
+  label {
+    font-size: 13px;
+    color: #000;
+    margin-bottom: 4px;
+    font-weight: 500;
+    margin-top: 16px;
+  }
+  button {
+    margin-top: 16px;
+  }
+}
+
 .height-enter,
 .height-leave-to {
   opacity: 0;
