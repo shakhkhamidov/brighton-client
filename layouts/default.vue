@@ -1,6 +1,8 @@
 <template>
   <div id="default">
     <Nuxt />
+
+    <bottom-links></bottom-links>
   </div>
 </template>
 
