@@ -19,6 +19,56 @@ export default {};
   }
 }
 
+.fade-enter-active,
+.fade-leave-active,
+.height-enter-active,
+.height-leave-active,
+.bottom-top-enter-active,
+.bottom-top-leave-active,
+.transform-bottom-top-enter-active,
+.transform-bottom-top-leave-active,
+.top-bottom-enter-active,
+.top-bottom-leave-active,
+.left-enter-active,
+.left-leave-active {
+  transition: 0.3s ease;
+}
+
+.left-enter,
+.left-leave-to {
+  transform: translateX(-100px);
+  opacity: 0;
+}
+
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.height-enter,
+.height-leave-to {
+  opacity: 0;
+  height: 0;
+}
+
+.bottom-top-enter,
+.bottom-top-leave-to {
+  margin-top: 30px;
+  opacity: 0;
+}
+
+.top-bottom-enter,
+.top-bottom-leave-to {
+  margin-top: -30px;
+  opacity: 0;
+}
+
+.transform-bottom-top-enter,
+.transform-bottom-top-leave-to {
+  transform: translateY(30px);
+  opacity: 0;
+}
+
 @font-face {
   font-display: swap;
   font-family: "Gilroy";
