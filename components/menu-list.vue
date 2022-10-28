@@ -1,15 +1,28 @@
 <template>
   <div class="menu-list">
-    <div class="list">
-      <div class="item" v-for="item of 12" :key="item.key" @click="openMeal()">
+    <div class="list" v-if="data.length">
+      <div
+        class="item"
+        v-for="item of data"
+        :key="item.key"
+        @click="openMeal(item._id)"
+      >
         <img src="~/static/meal2.png" alt="" />
 
         <div class="text">
-          <p class="plus title">Шницель</p>
-          <p class="description">С салатом и помидорами</p>
-          <p class="plus price">70,000 сум</p>
+          <p class="plus title">{{ item.name_ru }}</p>
+          <p class="description">{{ item.description_ru }}</p>
+          <p class="plus price">
+            {{ Number(item.price).toLocaleString() }}
+            сум
+          </p>
         </div>
       </div>
+    </div>
+    <div v-else>
+      <div class="margin"></div>
+      <p class="plus">Скоро мы добавим сюда блюда...</p>
+      <div class="margin"></div>
     </div>
 
     <div class="bg" v-if="openedMeal" @click="closeMeal()"></div>
@@ -17,24 +30,51 @@
     <transition name="transform-bottom-top" mode="out-in">
       <div class="modal modalOpenedMeal" v-if="openedMeal">
         <img src="~/static/top.png" alt="" />
-        <h2>Шницель - 40,000 сум</h2>
-        <p>Яйцо, сосиски, блины, черный хлеб, икра овощная, горчица.</p>
-        <button class="full">Закрыть</button>
+        <h2>
+          {{
+            allData.meals.body.filter((item) => item._id == globalElementId)[0]
+              .name_ru
+          }}
+          -
+          {{
+            Number(
+              allData.meals.body.filter(
+                (item) => item._id == globalElementId
+              )[0].price
+            ).toLocaleString()
+          }}
+          сум
+        </h2>
+        <p>
+          {{
+            allData.meals.body.filter((item) => item._id == globalElementId)[0]
+              .description_ru
+          }}
+        </p>
+        <button class="full" @click="closeMeal()">Закрыть</button>
       </div>
     </transition>
   </div>
 </template>
 
 <script>
+import { mapGetters, mapMutations } from "vuex";
+
 export default {
+  props: ["data"],
+  computed: {
+    ...mapGetters(["allData", "globalElementId"]),
+  },
   data() {
     return {
       openedMeal: false,
     };
   },
   methods: {
-    openMeal() {
+    ...mapMutations(["setGlobalElementId"]),
+    openMeal(id) {
       this.openedMeal = true;
+      this.setGlobalElementId(id);
     },
     closeMeal() {
       this.openedMeal = false;
@@ -74,12 +114,13 @@ export default {
   }
 }
 .list {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-}
-div {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  overflow: hidden;
   .item {
-    margin: 0 8px 12px 0;
+    width: calc(50% - 8px);
+    margin: 0 0 12px 0;
     border-radius: 10px;
     background-color: var(--bg);
     &:nth-child(2n) {

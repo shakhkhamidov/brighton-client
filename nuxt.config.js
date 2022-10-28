@@ -32,7 +32,10 @@ export default {
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [],
-
+  publicRuntimeConfig: {
+    // baseURL: 'http://localhost:8080',
+    baseURL: "http://localhost:4001",
+  },
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [],
 

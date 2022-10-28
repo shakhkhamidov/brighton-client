@@ -20,7 +20,7 @@
           <div>
             <img src="~/static/coffee.svg" />
           </div>
-          Меню блюд
+          Меню блюд - {{ allData.meals.body.length }}
         </nuxt-link>
         <nuxt-link to="/menu" class="item-img">
           <div>
@@ -66,3 +66,19 @@ a {
   }
 }
 </style>
+
+<script>
+import { mapActions, mapGetters, mapMutations, mapState } from "vuex";
+
+export default {
+  computed: {
+    ...mapGetters(["allData"]),
+  },
+  methods: {
+    ...mapActions(["getData"]),
+  },
+  created() {
+    this.getData(["meals"]);
+  },
+};
+</script>

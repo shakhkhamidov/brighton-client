@@ -6,24 +6,31 @@
       <h1>Меню</h1>
     </div>
 
-    <div class="scroll">
-      <span class="active">Основные блюда</span>
-      <span>Супы</span>
-      <span>Завтраки</span>
-      <span>Вторые блюда</span>
+    <div class="scroll" v-if="allData.categories.body.length">
+      <span
+        :class="{ active: item.active }"
+        v-for="item of allData.categories.body"
+        :key="item.key"
+        @click="showMealsByCategorie(item._id)"
+        >{{ item.name_ru }}</span
+      >
     </div>
-
-    <div class="width">
-      <menu-list></menu-list>
+    <span v-else>Loading...</span>
+    <div
+      class="width"
+      v-if="allData.meals.body.length && allData.categories.body.length"
+    >
+      <menu-list
+        :data="
+          allData.categories.body.filter((item) => item.active == true)[0].meals
+        "
+      ></menu-list>
     </div>
+    <span v-else>Loading...</span>
 
     <footer-component></footer-component>
   </div>
 </template>
-
-<script>
-export default {};
-</script>
 
 <style scoped lang="scss">
 .scroll {
@@ -40,7 +47,7 @@ export default {};
     display: inline-block;
     font-weight: 700;
     &.active {
-      background-color: var(--bg);
+      background-color: var(--yellow);
       color: #000 !important;
     }
     border-radius: 100px;
@@ -49,3 +56,20 @@ export default {};
   }
 }
 </style>
+
+<script>
+import { mapActions, mapGetters, mapMutations, mapState } from "vuex";
+
+export default {
+  computed: {
+    ...mapGetters(["allData"]),
+  },
+  methods: {
+    ...mapActions(["getData"]),
+    ...mapMutations(["showMealsByCategorie"]),
+  },
+  created() {
+    this.getData(["meals", "categories"]);
+  },
+};
+</script>

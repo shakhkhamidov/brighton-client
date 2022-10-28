@@ -24,5 +24,6 @@ footer {
   margin-top: 32px;
   background-color: var(--yellow);
   padding: 32px 0;
+  padding-bottom: 102px;
 }
 </style>
